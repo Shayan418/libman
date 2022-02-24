@@ -1,0 +1,26 @@
+{% extends "library/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>{{ request.user.email }}</h2>
+    <h2>YOOOOOOOOOOOO!!</h2>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between">
+            <h4>Books in Library</h4>
+        </div>
+            <div class="row mt-2 g-1">
+                {% for book in books %}
+                    <div class="col-md-3">
+                        <div class="card p-2">
+                            <div class="text-center mt-2 p-3"> <img src="{{ book.thumbnail }}" width="150" height="240" /> <span class="d-block font-weight-bold" style="text-overflow: ellipsis; ">{{book.title}}</span>
+                                <div class="d-flex flex-row align-items-center justify-content-center"> <small class="ml-1">{{book.authors}}</small> </div>
+                                <div class="d-flex justify-content-center mt-3"> <button class="btn btn-sm btn-outline-dark"><a href="book/{{ book.bookid }}">View book</a></button> </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+    </div>
+{% endblock %}

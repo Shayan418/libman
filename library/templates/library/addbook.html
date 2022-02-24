@@ -1,0 +1,15 @@
+{% extends "library/layout.html" %}
+
+{% block body %}
+
+<h2>Search for a book</h2>
+
+<form action="{% url 'addBook' %}" method="post">
+    {% csrf_token %}
+    <label for="search">search</label><br>
+    <input type="text" id="search" name="search"><br>
+  
+    <input type="submit">
+</form>
+
+{% endblock %}

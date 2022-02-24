@@ -1,0 +1,59 @@
+{% extends "library/layout.html" %}
+
+{% block body %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4 text-center">
+			<div class="media">
+				<img class="mr-3" alt="Bootstrap Media Preview" src="{{book.thumbnail}}">
+			</div>
+		</div>
+		<div class="col-md-8">
+            <h2>{{book.title}}</h2>
+            <div>
+                <small class="ml-1">{{book.authors}}</small>
+            </div>
+            <div>
+                ISBN : {{book.isbn}}
+            </div>
+
+			<div>
+                {% if user.is_authenticated %}
+					{% if isIssued %}
+						<div>
+							<h6> Issue Date : <span>{{ isIssued.timeCreated }} </span></h6>
+							{% if fine %}
+								<h6> Return Date : <span>{{ returndate }} </span></h6>
+								<h6> Fine : <span>{{ fine }} </span></h6>	
+							{% else %}
+								<h6> Time To Return : <span>{{ timeToReturn }}</span></h6>
+							{% endif %}
+							<form action="returnBook/" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="bookid" value="{{book.bookid}}">
+								<button type="submit" class="btn btn-primary" value="Submit">Return Book</button>
+							</form>
+							
+						</div>
+					{% else %}
+						<form action="issueBook/" method="post">
+							{% csrf_token %}
+							<input type="hidden" name="bookid" value="{{book.bookid}}">
+							<button type="submit" class="btn btn-primary" value="Submit">Issue Book</button>
+						</form>
+					{% endif %}
+				{% endif %}
+            </div>
+            
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			{{book.description | safe}}
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
